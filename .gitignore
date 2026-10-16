@@ -1,0 +1,21 @@
+# Virtual environment
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+
+# IDE / tools
+.idea/
+.claude/
+
+# Environment / secrets
+.env
+
+# Local databases
+*.sqlite
+*.db
+
+# OS
+.DS_Store
