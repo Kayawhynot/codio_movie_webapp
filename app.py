@@ -1,0 +1,21 @@
+from flask import Flask, render_template
+from data_manager import DataManager
+import os
+from models import db, Movie
+
+app = Flask(__name__)
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = f"sqlite:///{os.path.join(basedir, 'data/movies.db')}"
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(app)
+
+data_manager = DataManager()
+
+with app.app_context(): db.create_all()
+
+@app.route('/')
+def home():
+    all_users = data_manager.get_users()
+    return render_template('index.html', user_list=all_users)
