@@ -1,5 +1,9 @@
 {% extends 'base.html'%}
 {% block content %}
+<p><form action="/users" method="post">
+  <input type="text" name="usr_name">
+  <button type="submit">Add user</button>
+</form>
 {% for user in user_list %}      <!-- user_list kommt aus render_template; user = ein User pro Durchlauf -->
 <div>
   ----
@@ -7,8 +11,4 @@
 </div>
 <a href="/users/{{ user.id }}/movies">Show All Movies</a>
 {% endfor %}
-<form action="/users" method="post">
-  <input type="text" name="usr_name">
-  <button type="submit">Add user</button>
-</form>
 {% endblock %}
