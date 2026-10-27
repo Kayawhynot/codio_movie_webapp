@@ -21,17 +21,20 @@ data_manager = DataManager()
 
 os.makedirs(os.path.join(basedir, 'data'), exist_ok=True)
 
-with app.app_context(): db.create_all()
+with app.app_context():
+    db.create_all()
 
 
 @app.route('/')
 def home():
+    """Show the start page with all users."""
     all_users = data_manager.get_users()
     return render_template('index.html', user_list=all_users)
 
 
 @app.route('/users', methods=['POST'])
 def add_user():
+    """Create a new user from the form and go back to the start page."""
     usr_name = request.form['usr_name']
     data_manager.create_user(usr_name)
     return redirect(url_for('home'))
@@ -39,16 +42,26 @@ def add_user():
 
 @app.route('/users/<int:user_id>/movies', methods=['GET'])
 def user_movies(user_id):
+    """Show all movies of one user."""
     found_movies = data_manager.get_movies(user_id)
     return render_template('movies.html', movie_list=found_movies, page_user_id=user_id)
 
 
 @app.route('/users/<int:user_id>/movies', methods=['POST'])
 def save_movie(user_id):
+    """Look up a title on OMDb and save the movie for the user.
+
+    Shows a hint instead if OMDb has no match, cannot be reached or the
+    database fails.
+    """
     title = request.form['title']
     try:
-        response = requests.get('https://www.omdbapi.com/',
-                                params={'apikey': OMDB_API_KEY, 't': title, 'type': 'movie'}, timeout=5)
+        response = requests.get(
+            'https://www.omdbapi.com/',
+            params={'apikey': OMDB_API_KEY, 't': title, 'type': 'movie'},
+            timeout=5
+        )
+
         movie_data = response.json()
     except requests.exceptions.RequestException:
         found_movies = data_manager.get_movies(user_id)
@@ -77,12 +90,14 @@ def save_movie(user_id):
 
 @app.route('/users/<int:user_id>/movies/<int:mv_id>/delete', methods=['POST'])
 def remove_movie(user_id, mv_id):
+    """Delete one movie and return to the movie list."""
     data_manager.delete_movie(mv_id)
     return redirect(url_for('user_movies', user_id=user_id))
 
 
 @app.route('/users/<int:user_id>/movies/<int:mv_id>/update', methods=['POST'])
 def rename_movie(user_id, mv_id):
+    """Change the title of one movie and return to the movie list."""
     new_title = request.form['upd_mv_name']
     data_manager.update_movie(mv_id, new_title)
     return redirect(url_for('user_movies', user_id=user_id))
@@ -90,6 +105,7 @@ def rename_movie(user_id, mv_id):
 
 @app.errorhandler(404)
 def page_not_found(e):
+    """Show the custom 404 page."""
     return render_template('404.html'), 404
 
 

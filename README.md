@@ -3,6 +3,7 @@
 Flask app to manage favourite movies per user. Movie data comes from the OMDb API.
 
 ## Setup
+
 1. Clone the repo and open the folder.
 2. Create and activate a virtual environment:
    python3 -m venv .venv
