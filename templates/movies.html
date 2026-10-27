@@ -3,32 +3,32 @@
 {% block content %}
 <h1>Movies</h1>
 <p>
-{% if error_message %}
+    {% if error_message %}
 <p>{{ error_message }}</p>
 {% endif %}
 <p>
 <form action="/users/{{page_user_id}}/movies" method="post">
-  <input type="text" name="title" placeholder="Movie name">
-  <button type="submit">Add movie</button>
+    <input type="text" name="title" placeholder="Movie name">
+    <button type="submit">Add movie</button>
 </form>
 =============================
 {% for movie in movie_list %}
 <div>
-  <span>{{ movie.mv_title }} ({{ movie.mv_release_yr }})</span>
-  <form style="display: inline;" action="/users/{{ page_user_id }}/movies/{{ movie.mv_id }}/delete" method="post">
-    <button type="submit">Delete Movie</button>
-  </form>
+    <span>{{ movie.mv_title }} ({{ movie.mv_release_yr }})</span>
+    <form style="display: inline;" action="/users/{{ page_user_id }}/movies/{{ movie.mv_id }}/delete" method="post">
+        <button type="submit">Delete Movie</button>
+    </form>
 </div>
 <div>
   <img src="{{ movie.mv_poster }}" alt="Poster of {{ movie.mv_title }}" width="120">
 </div>
 <div>
-  <form action="/users/{{ page_user_id }}/movies/{{ movie.mv_id }}/update" method="post">
-    <input type="text" name="upd_mv_name" placeholder="New Movie Title">
-    <button type="submit">Update Movie</button>
+    <form action="/users/{{ page_user_id }}/movies/{{ movie.mv_id }}/update" method="post">
+        <input type="text" name="upd_mv_name" placeholder="New Movie Title">
+        <button type="submit">Update Movie</button>
 
-  </form>
-========
+    </form>
+    ========
 </div>
 {% else %}
 <p>No movies yet.</p>

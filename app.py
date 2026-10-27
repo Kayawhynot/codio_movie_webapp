@@ -40,11 +40,13 @@ def user_movies(user_id):
     found_movies = data_manager.get_movies(user_id)
     return render_template('movies.html', movie_list=found_movies, page_user_id=user_id)
 
+
 @app.route('/users/<int:user_id>/movies', methods=['POST'])
 def save_movie(user_id):
     title = request.form['title']
     try:
-        response = requests.get('https://www.omdbapi.com/', params={'apikey': OMDB_API_KEY, 't': title, 'type': 'movie'}, timeout=5)
+        response = requests.get('https://www.omdbapi.com/',
+                                params={'apikey': OMDB_API_KEY, 't': title, 'type': 'movie'}, timeout=5)
         movie_data = response.json()
     except requests.exceptions.RequestException:
         found_movies = data_manager.get_movies(user_id)
@@ -67,8 +69,8 @@ def save_movie(user_id):
     except SQLAlchemyError:
         db.session.rollback()
         found_movies = data_manager.get_movies(user_id)
-        return  render_template('movies.html', movie_list=found_movies, page_user_id=user_id,
-                                error_message='New Movie could not be added please try again')
+        return render_template('movies.html', movie_list=found_movies, page_user_id=user_id,
+                               error_message='New Movie could not be added please try again')
 
 
 @app.route('/users/<int:user_id>/movies/<int:mv_id>/delete', methods=['POST'])

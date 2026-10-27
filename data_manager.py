@@ -1,7 +1,7 @@
 from models import db, User, Movie
 
 
-class DataManager():
+class DataManager:
     def create_user(self, usr_name):
         new_user = User(name=usr_name)
         db.session.add(new_user)
