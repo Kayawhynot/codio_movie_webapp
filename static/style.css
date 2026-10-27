@@ -4,7 +4,7 @@ header { background: #1f2a44; color: white; padding: 1rem 2rem; }
 header h1 { margin: 0; font-size: 1.5rem; }
 nav a { color: #9fc5ff; }
 
-main.container { max-width: 720px; margin: 2rem auto; padding: 0 1rem; }
+main.container { margin: 2rem 0; padding: 0 2rem; }
 
 input[type="text"] { padding: 0.4rem 0.6rem; border: 1px solid #bbb; border-radius: 6px; }
 button { padding: 0.4rem 0.9rem; border: 0; border-radius: 6px; background: #3b6fd4; color: white; cursor: pointer; }
