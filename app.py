@@ -57,7 +57,7 @@ def save_movie(user_id):
     if 'Error' in movie_data:
         found_movies = data_manager.get_movies(user_id)
         return render_template('movies.html', movie_list=found_movies, page_user_id=user_id,
-                               error_message='Movie not found!')
+                               error_message=movie_data['Error'])
     new_movie = Movie(
         mv_title=movie_data['Title'],
         mv_release_yr=movie_data['Year'],
