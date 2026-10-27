@@ -19,6 +19,8 @@ db.init_app(app)
 
 data_manager = DataManager()
 
+os.makedirs(os.path.join(basedir, 'data'), exist_ok=True)
+
 with app.app_context(): db.create_all()
 
 
